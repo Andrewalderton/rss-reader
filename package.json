@@ -1,0 +1,36 @@
+{
+  "name": "feedreader-app",
+  "version": "1.0.0",
+  "description": "Display an RSS feed of your favourite web sources",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "browserify": "browserify src/js/main.js -o dist/js/main.min.js && gulp uglify"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "rss-to-json": "^1.0.3"
+  },
+  "devDependencies": {
+    "browser-sync": "^2.23.6",
+    "browserify": "^15.2.0",
+    "critical": "^1.1.0",
+    "del": "^3.0.0",
+    "gulp": "^4.0.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-copy": "^1.1.0",
+    "gulp-html-replace": "^1.6.2",
+    "gulp-htmlmin": "^4.0.0",
+    "gulp-imagemin": "^4.1.0",
+    "gulp-minify-css": "^1.2.4",
+    "gulp-minify-inline": "^1.0.0",
+    "gulp-plumber": "^1.2.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-sourcemaps": "^2.6.4",
+    "gulp-uglify": "^3.0.0",
+    "gulplog": "^1.0.0",
+    "vinyl-buffer": "^1.0.1",
+    "vinyl-source-stream": "^2.0.0"
+  }
+}
