@@ -1,3 +1,7 @@
+* {
+    box-sizing: border-box;
+}
+
 a {
     text-decoration: none;
 }
@@ -46,4 +50,14 @@ iframe {
 
 article a {
     word-wrap: break-word;
+}
+
+/* Set the order of RSS feeds */
+#article {
+    display: flex;
+    flex-direction: column;
+}
+
+#a0 {
+    order: -1;
 }

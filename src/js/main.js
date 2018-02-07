@@ -11,12 +11,16 @@
         'http://javascriptissexy.com/rss',
         'https://benmccormick.org/rss/',
         'http://www.programwitherik.com/rss/',
-
+        'http://feeds.dzone.com/home',
+        'https://rss.simplecast.com/podcasts/2067/rss'
     ];
 
     const articles = 6; // Set the number of articles to display for each feed
 
-    function headerAppend(rss) {
+    function headerAppend(rss, feed) {
+        if (rss === null || rss === undefined) {
+            return;
+        }
         // Get title and description of the feed
         let title = rss.title;
         let description = rss.description;
@@ -24,6 +28,7 @@
         // Create row
         let div = document.createElement('div');
         div.classList.add('row');
+        div.setAttribute('id', 'a' + feed);
         el.appendChild(div);
 
         // Create column
@@ -41,7 +46,7 @@
     }
 
     function articleAppend(article, div) {
-        if (article === undefined | null) {
+        if (article === null || article === undefined) {
             return;
         }
         // Append an article to the page
@@ -59,11 +64,12 @@
         let head = JSON.parse(sessionStorage.getItem(JSON.stringify('header' + feed)));
 
         let div = headerAppend(head);
+
         // Retrieve the articles for the feed and append to page
         for (let key = 0; key < articles; key++) {
             let i = feed + key;
             let article = JSON.parse(sessionStorage.getItem(JSON.stringify(i)));
-            articleAppend(article[key], div);
+            articleAppend(article[0], div);
         }
     }
 
@@ -73,12 +79,16 @@
                 // Get the data for each RSS feed
                 Feed.load(CORS_PROXY + feeds[feed], (err, rss) => {
                     // Set the feed header and save
-                    let div = headerAppend(rss);
+                    let header = {
+                        title: rss.title,
+                        description: rss.description
+                    };
+                    let div = headerAppend(header, feed);
                     sessionStorage.setItem(JSON.stringify('header' + feed), JSON.stringify(rss));
 
-                    let cache = [];
                     // Get first 6 articles
                     for (let i = 0; i < articles; i++) {
+                        let cache = [];
                         let obj = {
                             title: rss.items[i].title,
                             description: rss.items[i].description,
@@ -88,10 +98,11 @@
 
                         // Save data to sessionStorage
                         sessionStorage.setItem(JSON.stringify(feed + i), JSON.stringify(cache));
-                        sessionStorage.setItem('entry', 'true');
 
                         articleAppend(rss.items[i], div);
                     }
+
+                    sessionStorage.setItem('entry', 'true');
                 });
             } else {
                 processRss(feed);
@@ -99,5 +110,4 @@
         }
     }
     firstLoad();
-
 })();
