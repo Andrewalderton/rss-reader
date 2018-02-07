@@ -16,6 +16,8 @@ var gulp = require('gulp'),
     buffer = require('vinyl-buffer'),
     sourcemaps = require('gulp-sourcemaps'),
     log = require('gulplog'),
+    babel = require('gulp-babel'),
+    babelify = require('babelify'),
     browserSync = require('browser-sync').create();
 
 var critical = require('critical').stream;
@@ -27,6 +29,7 @@ gulp.task('javascript', function () {
     entries: './src/js/main.js',
     debug: true
   });
+  b.transform(babelify, { "presets": [ "env" ] });
   return b.bundle()
     .pipe(source('src/js/main.js'))
     .pipe(buffer())
@@ -81,7 +84,7 @@ gulp.task('del', function(done) {
 
 // CSS minifier
 gulp.task('mini-css', function(done) {
-  [ gulp.src('src/css/main.css')
+  [ gulp.src(['src/css/normalize.css', 'src/css/skeleton.css','src/css/main.css'])
       .pipe(plumber())
       .pipe(minifycss({compatibility: 'ie8'}))
       .pipe(rename({ suffix: '.min' }))
@@ -126,7 +129,7 @@ gulp.task('compress-image', function(done) {
 // Watch Files For Changes
 gulp.task('watch', function(done) {
   gulp.watch('src/*.html', gulp.series('mini-html'));
-  gulp.watch('src/js/*.js', gulp.series('mini-js'));
+  gulp.watch('src/js/*.js', gulp.series('javascript'));
   gulp.watch('src/css/*.css', gulp.series('mini-css'));
   gulp.watch('src/img/*', gulp.series('compress-image'));
   done();

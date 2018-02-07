@@ -7,17 +7,29 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "browserify": "browserify src/js/main.js -o dist/js/main.min.js && gulp uglify"
   },
+  "presets": [
+    "env",
+    {
+      "loose": true,
+      "allowTopLevelThis": true,
+      "modules": false
+    }
+  ],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "rss-to-json": "^1.0.3"
+    "rss-to-json": "^1.0.4"
   },
   "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "babelify": "^8.0.0",
     "browser-sync": "^2.23.6",
     "browserify": "^15.2.0",
     "critical": "^1.1.0",
     "del": "^3.0.0",
     "gulp": "^4.0.0",
+    "gulp-babel": "^7.0.1",
     "gulp-concat": "^2.6.1",
     "gulp-copy": "^1.1.0",
     "gulp-html-replace": "^1.6.2",
